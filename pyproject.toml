@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rain-tomorrow"
+version = "0.1.0"
+description = "Binary classification of next-day rain in Australia, with a containerized inference pipeline."
+readme = "README.md"
+requires-python = ">=3.12"
+# Versions are pinned because models/model.pkl is a pickled scikit-learn estimator.
+dependencies = [
+    "scikit-learn==1.5.2",
+    "pandas==2.2.3",
+    "numpy==2.0.0",
+    "joblib==1.4.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "matplotlib",
+    "jupyter",
+]
+
+[project.scripts]
+rain-train = "rain_tomorrow.train:main"
+rain-evaluate = "rain_tomorrow.evaluate:main"
+rain-predict = "rain_tomorrow.inference:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
